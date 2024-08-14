@@ -1,68 +1,38 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable, getPaginationRowModel } from "@tanstack/react-table";
-import { Pagination } from "./Pagination";
-export const CampaignsTable = ({ campaigns }) => {
-	const sortedCampaigns = campaigns.sort((a, b) => a.name.localeCompare(b.name));
-	const [campaignsData, setCampaignsData] = useState(sortedCampaigns);
-	const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
-	console.log("Campaings Data: ", campaignsData);
+import PlayTableMenu from "./PlayTableMenu";
 
-	const selectPlay = (play) => {
-		console.log(play);
-	};
+export default function PlaysTable({ campaignId, playsData }) {
+	const sortedPlays = playsData.sort((a, b) => a.name.localeCompare(b.name));
+	console.log("CampaignId: ", campaignId);
+	const [plays, setPlays] = useState(sortedPlays);
 
 	const columnHelper = createColumnHelper();
-	const campaignColumns = [
+	const playsColumns = [
 		columnHelper.accessor("name", {
-			cell: (info) => (
-				<Link className='text-tertiary-500 hover:text-tertiary-400 visited:text-tertiary-800' href={`campaigns/${info.row.original.id}`}>
-					{info.getValue()}
-				</Link>
-			),
+			header: "Play Name",
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("type", {
+			header: "Type",
+			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("status", {
+			header: "Status",
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor("playbook", {
-			cell: (info) => info.getValue(),
-		}),
-		{
+		columnHelper.accessor("actions", {
 			header: "Actions",
-			id: "actions",
-			classes: "flex justify-center",
-			size: 150,
-			cell: ({ row }) => (
-				<div className='flex justify-center gap-2'>
-					{/* Example buttons */}
-					<button
-						type='button'
-						onClick={() => selectPlay(row.original, true)}
-						className='rounded bg-primary-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-					>
-						Edit
-					</button>
-					<button type='button' className='rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
-						Delete
-					</button>
-				</div>
-			),
-		},
+			cell: (info) => <PlayTableMenu campaignId={campaignId} playData={info.row.original} />,
+		}),
 	];
 
 	const table = useReactTable({
-		data: campaignsData,
-		columns: campaignColumns,
+		data: plays,
+		columns: playsColumns,
 		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		onPaginationChange: setPagination,
-		state: {
-			pagination,
-		},
 	});
-
-	if (campaignsData && campaignsData.length == 0) return <p>Loading Campaign Data</p>;
 
 	return (
 		<>
@@ -70,18 +40,14 @@ export const CampaignsTable = ({ campaigns }) => {
 				<div>
 					<div className='sm:flex sm:items-center'>
 						<div className='sm:flex-auto'>
-							<h1 className='text-base font-semibold leading-6 text-gray-900'>ABM Campaigns</h1>
-							<p className='mt-2 text-sm text-gray-700'>
-								Welcome to your ABM Campaign Overview. Here, you can view all your active and past campaigns, track their current status, and see which playbook each campaign is utilizing. Quickly
-								identify progress and make informed decisions to optimize your account-based marketing strategies.
-							</p>
+							<h1 className='text-base font-semibold leading-6 text-gray-900'>Plays</h1>
 						</div>
 						<div className='mt-4 sm:ml-16 sm:mt-0 sm:flex-none'>
 							<button
 								type='button'
 								className='block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 							>
-								New Campaign
+								New Play
 							</button>
 						</div>
 					</div>
@@ -113,7 +79,6 @@ export const CampaignsTable = ({ campaigns }) => {
 											))}
 										</tbody>
 									</table>
-									<Pagination table={table} totalPages={campaignsData.length} />
 								</div>
 							</div>
 						</div>
@@ -122,4 +87,4 @@ export const CampaignsTable = ({ campaigns }) => {
 			)}
 		</>
 	);
-};
+}

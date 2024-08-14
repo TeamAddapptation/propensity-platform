@@ -8,9 +8,8 @@ async function getCampaigns() {
 
 export default async function Campaigns() {
 	const campaigns = await getCampaigns();
-	console.log("Campaigns: ", campaigns);
 	return (
-		<div className='px-4 sm:px-6 lg:px-8 py-4'>
+		<div className='p-4 sm:p-6 lg:p-8'>
 			<CampaignsTable campaigns={campaigns} />
 		</div>
 	);
