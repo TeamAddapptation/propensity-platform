@@ -1,13 +1,12 @@
 "use client";
 import { useAppContext } from "@/context";
+
 export default function Play() {
-	const { name, setName } = useAppContext();
+	const { play } = useAppContext();
+
 	return (
 		<div>
-			<button type='button' onClick={() => setName({ firstName: "Tim", lastName: "Bascom" })}>
-				Change Name
-			</button>
-			{name.firstName}
+			<pre>{JSON.stringify(play, null, 2)}</pre>
 		</div>
 	);
 }

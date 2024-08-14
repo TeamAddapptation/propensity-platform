@@ -5,12 +5,9 @@ import { createContext, useContext, useState } from "react";
 const AppContext = createContext(undefined);
 
 export function AppWrapper({ children }) {
-	let [name, setName] = useState({
-		firstName: "Jason",
-		lastName: "Bean",
-	});
+	let [play, setPlay] = useState({});
 
-	return <AppContext.Provider value={{ name, setName }}>{children}</AppContext.Provider>;
+	return <AppContext.Provider value={{ play, setPlay }}>{children}</AppContext.Provider>;
 }
 
 export function useAppContext() {
