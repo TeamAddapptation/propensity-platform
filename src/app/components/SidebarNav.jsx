@@ -166,20 +166,8 @@ export default function SidebarNav() {
 					{/* Separator */}
 					<div aria-hidden='true' className='h-6 w-px bg-gray-900/10 lg:hidden' />
 
-					<div className='flex flex-1 gap-x-4 self-stretch lg:gap-x-6'>
-						<form action='#' method='GET' className='relative flex flex-1'>
-							<label htmlFor='search-field' className='sr-only'>
-								Search
-							</label>
-							<MagnifyingGlassIcon aria-hidden='true' className='pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400' />
-							<input
-								id='search-field'
-								name='search'
-								type='search'
-								placeholder='Search...'
-								className='block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm'
-							/>
-						</form>
+					<div className='flex items-center flex-1 gap-x-4 self-stretch lg:gap-x-6'>
+						<h4 className='relative flex flex-1 text-lg text-gray-400'>Workspace Name</h4>
 						<div className='flex items-center gap-x-4 lg:gap-x-6'>
 							<button type='button' className='-m-2.5 p-2.5 text-gray-400 hover:text-gray-500'>
 								<span className='sr-only'>View notifications</span>

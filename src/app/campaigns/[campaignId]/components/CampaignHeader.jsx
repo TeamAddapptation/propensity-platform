@@ -1,60 +1,93 @@
 "use client";
-import { BriefcaseIcon, CalendarIcon, CheckIcon, ChevronDownIcon, ChevronRightIcon, CurrencyDollarIcon, LinkIcon, MapPinIcon, PencilIcon } from "@heroicons/react/20/solid";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { EllipsisVerticalIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { formatDate } from "@/app/utilities/helpers";
+import Link from "next/link";
 export default function CampaignHeader({ campaignData }) {
-	console.log("Campaign Data: ", campaignData);
+	const campaign = campaignData.campaign;
+	console.log("Campaign: ", campaign);
+
+	function campaignStatus(campaign) {
+		switch (campaign.Status__c.toLowerCase()) {
+			case "active":
+				return <span className='inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-600'>Cohort {campaign.Cohort_Number__c} - Active</span>;
+
+			case "paused":
+				return <span className='inline-flex items-center rounded-md bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-600'>Cohort {campaign.Cohort_Number__c} - Paused</span>;
+
+			case "inactive":
+				return <span className='inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600'>Cohort {campaign.Cohort_Number__c} - Inactive</span>;
+
+			case "ended":
+				return <span className='inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600'>Cohort {campaign.Cohort_Number__c} - Ended</span>;
+
+			default:
+				return <span className='inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600'>Cohort {campaign.Cohort_Number__c} - Unknown</span>;
+		}
+	}
+
 	return (
-		<div className='lg:flex lg:items-center lg:justify-between'>
-			<div className='min-w-0 flex-1'>
-				<div className='mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6'>
-					<div className='mt-2 flex items-center text-sm text-gray-500'>
-						{campaignData.campaign.Status__c ? (
-							<span className='inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700'>Active - Cohort {campaignData.campaign.Cohort_Number__c}</span>
-						) : (
-							<span className='inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600'>Inactive</span>
-						)}
+		<div>
+			<div className='flex space-between items-center'>
+				<div className='flex items-center sm:w-0 sm:flex-1'>
+					<div className='flex flex-col'>
+						<div className='flex'>
+							<Link href='/campaigns' className='flex'>
+								<ChevronLeftIcon aria-hidden='true' className='h-4 w-4 text-gray-400 mr-1' />
+								<div className='mb-1 flex items-center text-xs text-gray-400'>Campaigns</div>
+							</Link>
+						</div>
+
+						<h1 id='message-heading' className='text-lg font-semibold leading-6 text-gray-900'>
+							{campaign.Name}
+						</h1>
+						<div className='flex gap-2'>
+							<div className='mt-1 flex items-center text-xs text-gray-400 gap-1'>
+								<p className='text-gray-600 font-semibold'>Playbook</p>
+								{campaignData.campaign.Playbook__r.Name}
+							</div>
+							<div className='mt-1 flex items-center text-xs text-gray-400 gap-1'>
+								<p className='text-gray-600 font-semibold'>Launch Date</p>
+								{formatDate(campaignData.campaign.Start_Date__c)}
+							</div>
+						</div>
 					</div>
 				</div>
-				<h2 className='mt-2 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight'>{campaignData.campaign.Name}</h2>
-				<div className='mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6'>
-					<div className='mt-2 flex items-center text-sm text-gray-500'>
-						<CalendarIcon aria-hidden='true' className='mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400' />
-						{formatDate(campaignData.campaign.Start_Date__c)} - {formatDate(campaignData.campaign.End_Date__c)}
-					</div>
+
+				<div className='mt-4 flex items-center justify-between sm:ml-6 sm:mt-0 sm:flex-shrink-0 sm:justify-start'>
+					{campaignStatus(campaign)}
+					<Menu as='div' className='relative ml-3 inline-block text-left'>
+						<div>
+							<MenuButton className='-my-2 flex items-center rounded-full bg-white p-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500'>
+								<span className='sr-only'>Open options</span>
+								<EllipsisVerticalIcon aria-hidden='true' className='h-5 w-5' />
+							</MenuButton>
+						</div>
+
+						<MenuItems
+							transition
+							className='absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in'
+						>
+							<div className='py-1'>
+								<MenuItem>
+									<a href='#' className='flex justify-between px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900'>
+										<span>Edit</span>
+									</a>
+								</MenuItem>
+								<MenuItem>
+									<a href='#' className='flex justify-between px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900'>
+										<span>Duplicate</span>
+									</a>
+								</MenuItem>
+								<MenuItem>
+									<button type='button' className='flex w-full justify-between px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900'>
+										<span>Archive</span>
+									</button>
+								</MenuItem>
+							</div>
+						</MenuItems>
+					</Menu>
 				</div>
-			</div>
-			<div className='mt-5 flex lg:ml-4 lg:mt-0'>
-				<span className='hidden sm:block'>
-					<button type='button' className='inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
-						<PencilIcon aria-hidden='true' className='-ml-0.5 mr-1.5 h-5 w-5 text-gray-400' />
-						Edit
-					</button>
-				</span>
-
-				{/* Dropdown */}
-				<Menu as='div' className='relative ml-3 sm:hidden'>
-					<MenuButton className='inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400'>
-						More
-						<ChevronDownIcon aria-hidden='true' className='-mr-1 ml-1.5 h-5 w-5 text-gray-400' />
-					</MenuButton>
-
-					<MenuItems
-						transition
-						className='absolute right-0 z-10 -mr-1 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in'
-					>
-						<MenuItem>
-							<a href='#' className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100'>
-								Edit
-							</a>
-						</MenuItem>
-						<MenuItem>
-							<a href='#' className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100'>
-								View
-							</a>
-						</MenuItem>
-					</MenuItems>
-				</Menu>
 			</div>
 		</div>
 	);
