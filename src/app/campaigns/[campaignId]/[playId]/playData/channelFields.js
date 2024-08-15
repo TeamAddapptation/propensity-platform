@@ -3,12 +3,12 @@ export const channelFields = {
 		type: "Facebook Ad",
 		play_name: "name",
 		fields: [
-			{ label: "Start Date", value: "planned_start", type: "date" },
-			{ label: "End Date", value: "planned_end", type: "date" },
-			{ label: "Primary Text", value: "body", type: "html" },
-			{ label: "Headline", value: "subject", type: "html" },
-			{ label: "Click URL", value: "click_url" },
-			{ label: "Call to Action", value: "call_to_action" },
+			{ label: "Start Date", value: "Planned_Start_Date__c", type: "date" },
+			{ label: "End Date", value: "Planned_End_Date__c", type: "date" },
+			{ label: "Primary Text", value: "Body_Text_Only__c", type: "html" },
+			{ label: "Headline", value: "Subject__c", type: "html" },
+			{ label: "Click URL", value: "Click_URL__c" },
+			{ label: "Call to Action", value: "Call_To_Action__c" },
 		],
 		editFields: [
 			{ label: "Start Date", keyLink: "planned_start", name: "Planned_Start_Date__c", type: "date", placeholder: "", id: "p__planned-state-date", span: "col-span-3" },

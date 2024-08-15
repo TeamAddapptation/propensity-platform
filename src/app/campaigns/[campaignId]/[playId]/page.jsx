@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import PlayContentView from "./components/PlayContentView";
+import FacebookAd from "./components/AdPreviews/FacebookAd";
 
 export default function Play({ params }) {
 	const [play, setPlay] = useState(null);
@@ -69,8 +70,8 @@ export default function Play({ params }) {
 							</div>
 						</div>
 						<div className='mt-5 flex justify-center sm:mt-0'>
-							<a href='#' className='rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
-								Edit
+							<a href='#' className='rounded bg-red px-2 py-1 text-sm font-semibold text-red-500 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-gray-50'>
+								Not Launch Ready
 							</a>
 						</div>
 					</div>
@@ -80,7 +81,9 @@ export default function Play({ params }) {
 				<div className='w-full lg:w-6/12 bg-white'>
 					<PlayContentView play={play} />
 				</div>
-				<div className='w-full lg:w-6/12 bg-white'>sidebar</div>
+				<div className='w-full lg:w-6/12 bg-gray-100 p-10'>
+					<FacebookAd play={play} />
+				</div>
 			</div>
 		</div>
 	);

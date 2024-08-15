@@ -1,0 +1,27 @@
+.p__facebook_ad_preview {
+	background-color: #fff;
+}
+.p__profile_image {
+	width: 40px;
+	height: 40px;
+	border-radius: 40px;
+	background-color: rgb(203 213 225);
+}
+.p__globe_icon {
+	width: 15px;
+	height: 15px;
+}
+.p__header_btns {
+	width: 1.75rem;
+	height: 1.75rem;
+}
+.p__image {
+	width: 100%;
+	height: "auto";
+	min-height: 275px;
+	background-color: rgb(3 105 161);
+}
+.p__social_btns {
+	width: 1.5rem;
+	height: 1.5rem;
+}
