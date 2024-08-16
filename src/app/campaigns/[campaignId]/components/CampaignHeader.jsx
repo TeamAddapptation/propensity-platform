@@ -33,8 +33,8 @@ export default function CampaignHeader({ campaignData }) {
 				<div className='flex items-center sm:w-0 sm:flex-1'>
 					<div className='flex flex-col'>
 						<div className='flex'>
-							<nav aria-label='Breadcrumb' className='hidden sm:flex'>
-								<ol role='list' className='flex items-center space-x-4'>
+							<nav aria-label='Breadcrumb' className='hidden sm:flex mb-2'>
+								<ol role='list' className='flex items-center space-x-1'>
 									<li>
 										<div className='flex'>
 											<Link href={`/campaigns`} className='text-xs font-medium text-gray-500 hover:text-gray-700'>
@@ -45,7 +45,7 @@ export default function CampaignHeader({ campaignData }) {
 									<li>
 										<div className='flex items-center'>
 											<ChevronRightIcon aria-hidden='true' className='h-5 w-5 flex-shrink-0 text-gray-400' />
-											<Link href={`/campaigns/${campaignId}`} className='ml-4 text-xs font-medium text-gray-500 hover:text-gray-700'>
+											<Link href={`/campaigns/${campaignId}`} className='ml-1 text-xs font-medium text-gray-500 hover:text-gray-700'>
 												Plays
 											</Link>
 										</div>
