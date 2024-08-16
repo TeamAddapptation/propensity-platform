@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SidebarNav from "./components/SidebarNav";
 import { AppWrapper } from "@/context";
+import Dashboard from "./page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +16,9 @@ export default function RootLayout({ children }) {
 		<html lang='en'>
 			<body className={`bg-slate-100 ${inter.className}`}>
 				<SidebarNav />
+
 				<AppWrapper>
-					<main className='lg:pl-64'>{children}</main>
+					<Dashboard>{children}</Dashboard>
 				</AppWrapper>
 			</body>
 		</html>
