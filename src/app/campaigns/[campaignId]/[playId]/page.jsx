@@ -12,7 +12,7 @@ export default function Play({ params }) {
 		queryKey: ["play"],
 		queryFn: async () => {
 			const res = await fetch(
-				`https://t-propensity-dashboard.addapptation.com/account_lists_data?api_key=6d5b9cb6-d85e-43c8-a892-b9c18dd77bac&play_buying_circles=true&campaign_id=${params.campaignId}&play_id=${params.playId}`
+				`https://t-propensity-react.addapptation.com/account_lists_data?api_key=6d5b9cb6-d85e-43c8-a892-b9c18dd77bac&play_buying_circles=true&campaign_id=${params.campaignId}&play_id=${params.playId}`
 			);
 			const data = await res.json();
 			return data ? data : {}; // Ensure data is always a plain object
