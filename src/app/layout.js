@@ -14,6 +14,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang='en'>
+			<head>
+				<link rel='stylesheet' type='text/css' href='https://cdn.addapptation.com/addapptation-stylesheets/fontawesome-pro-5.10.0-11-web/css/all.min.css' media='all' />
+			</head>
 			<body className={`bg-slate-100 ${inter.className}`}>
 				<SidebarNav />
 

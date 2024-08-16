@@ -1,9 +1,21 @@
 "use client";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import PlayContentView from "./components/PlayContentView";
 import FacebookAd from "./components/AdPreviews/FacebookAd";
+import Loading from "@/app/components/Loading";
+import AdIcon from "./components/AdIcon";
 
 export default function Play({ params }) {
+	const [editMode, setEditMode] = useState(false);
+	const [initialPlayData, setInitialPlayData] = useState(null);
+
+	function editHandler(isEdit, isCancel) {
+		setEditMode(isEdit);
+		if (isCancel) setPlayData(initialPlayData);
+		console.log(editMode);
+	}
+
 	const {
 		data: playData,
 		error,
@@ -20,7 +32,7 @@ export default function Play({ params }) {
 	});
 
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return <Loading text={"Loading Play Data"} />;
 	}
 
 	if (error) {
@@ -53,8 +65,6 @@ export default function Play({ params }) {
 		}
 	}
 
-	console.log("Play Data: ", play);
-
 	return (
 		<div className='rounded-lg bg-white m-4'>
 			<div className='overflow-hidden border-b border-gray-200 mb-4'>
@@ -63,11 +73,13 @@ export default function Play({ params }) {
 				</h2>
 				<div className='p-4'>
 					<div className='sm:flex sm:items-center sm:justify-between'>
-						<div className='sm:flex sm:space-x-5'>
-							<div className='flex-shrink-0'></div>
+						<div className='sm:flex sm:space-x-5 items-center'>
+							<div className='flex-shrink-0'>
+								<AdIcon type={play.Type__c} />
+							</div>
 							<div className='mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left'>
 								<p className='text-sm font-medium text-gray-600'>{play.Type__c || "No type available"}</p>
-								<p className='text-xl font-bold text-gray-900 sm:text-2xl'>{play.Name || "No name available"}</p>
+								<p className='text-lg font-semibold text-gray-900 sm:text-lg'>{play.Name || "No name available"}</p>
 								<p className='text-sm font-medium text-gray-600'>{getStatusBadge(play.Status__c)}</p>
 							</div>
 						</div>
@@ -81,7 +93,7 @@ export default function Play({ params }) {
 			</div>
 			<div className='flex flex-col lg:flex-row p-2 sm:p-6 lg:p-4 gap-3'>
 				<div className='w-full lg:w-6/12 bg-white'>
-					<PlayContentView play={play} />
+					<PlayContentView play={play} editHandler={editHandler} />
 				</div>
 				<div className='w-full lg:w-6/12 bg-gray-100 p-10'>
 					<FacebookAd play={play} />
