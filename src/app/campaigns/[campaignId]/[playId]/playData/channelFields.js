@@ -11,6 +11,7 @@ export const channelFields = {
 			{ label: "Call to Action", value: "Call_To_Action__c" },
 		],
 		editFields: [
+			{ label: "Play Name", keyLink: "name", name: "Name", type: "text", placeholder: "", id: "p__name", span: "col-span-6" },
 			{ label: "Start Date", keyLink: "planned_start", name: "Planned_Start_Date__c", type: "date", placeholder: "", id: "p__planned-state-date", span: "col-span-3" },
 			{ label: "End Date", keyLink: "planned_end", name: "Planned_End_Date__c", type: "date", placeholder: "", id: "p__planned-end-date", span: "col-span-3" },
 			{ label: "Primary Text", keyLink: "body", name: "Body_Text_Only__c", type: "textarea", placeholder: "", id: "p__subject", span: "col-span-6" },
