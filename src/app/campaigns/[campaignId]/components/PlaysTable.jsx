@@ -2,28 +2,50 @@
 import { useState } from "react";
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable, getPaginationRowModel } from "@tanstack/react-table";
 import PlayTableMenu from "./PlayTableMenu";
+import Link from "next/link";
+import { formatDate, adIcon, statusBadge } from "@/app/utilities/helpers";
 
 export default function PlaysTable({ campaignId, playsData }) {
 	const sortedPlays = playsData.sort((a, b) => a.name.localeCompare(b.name));
-	console.log("CampaignId: ", campaignId);
+	console.log("Plays Data: ", playsData);
 	const [plays, setPlays] = useState(sortedPlays);
 
 	const columnHelper = createColumnHelper();
 	const playsColumns = [
 		columnHelper.accessor("name", {
 			header: "Play Name",
-			cell: (info) => info.getValue(),
+			cell: (info) => (
+				<div className='flex gap-2 items-center'>
+					<span className='p__play-icon'>{adIcon(info.row.original.type, "w-6 h-6", "text-sm")}</span>
+					<div className='flex flex-col'>
+						<Link className='text-gray-500 hover:text-tertiary-400 visited:text-gray-800' href={`${campaignId}/${info.row.original.id}`}>
+							{info.getValue()}
+						</Link>
+						<p className='truncate text-xs leading-5 text-gray-500'>{info.row.original.type}</p>
+					</div>
+				</div>
+			),
 		}),
-		columnHelper.accessor("type", {
-			header: "Type",
-			cell: (info) => info.getValue(),
+		columnHelper.accessor("run date", {
+			header: "Run Date",
+			classes: "text-center",
+			cell: (info) => (
+				<div class='text-center'>
+					<p class='text-xs'>
+						{formatDate(info.row.original.planned_start)} - {formatDate(info.row.original.planned_end)}
+					</p>
+				</div>
+			),
 		}),
 		columnHelper.accessor("status", {
 			header: "Status",
-			cell: (info) => info.getValue(),
+			classes: "text-center",
+			cell: (info) => <div class='text-center'>{statusBadge(info.row.original.status)}</div>,
 		}),
+
 		columnHelper.accessor("actions", {
 			header: "Actions",
+			classes: "text-center",
 			cell: (info) => <PlayTableMenu campaignId={campaignId} playData={info.row.original} />,
 		}),
 	];

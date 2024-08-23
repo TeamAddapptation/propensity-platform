@@ -9,7 +9,7 @@ async function getCampaigns() {
 export default async function Campaigns() {
 	const campaigns = await getCampaigns();
 	return (
-		<div className='p-4 sm:p-6 lg:p-8'>
+		<div className='bg-white p-4 sm:p-6 lg:p-8 m-4'>
 			<CampaignsTable campaigns={campaigns} />
 		</div>
 	);
