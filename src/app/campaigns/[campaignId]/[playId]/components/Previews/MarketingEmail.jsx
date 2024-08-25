@@ -3,7 +3,7 @@ import React from "react";
 export default function MarketingEmail({ play }) {
 	console.log("Marketing Template: ", play);
 	return (
-		<div className='border rounded'>
+		<div className='border rounded bg-white'>
 			<div className='mb-5 bg-white'>
 				<div className='flex px-4 py-3 border-b justify-between items-center gap-3'>
 					<div className='flex flex-col'>
@@ -21,7 +21,7 @@ export default function MarketingEmail({ play }) {
 					</div>
 				</div>
 			</div>
-			<div className='bg-slate-50 p-5 border rounded-md h-96 overflow-y-auto mx-10'>
+			<div className='bg-slate-100 p-5 border rounded-md h-96 overflow-y-auto mx-10'>
 				<div className='flex flex-col gap-2 border-b pb-3'>
 					<div className='flex gap-1'>
 						<p className='text-sm font-semibold m-0'>To:</p>

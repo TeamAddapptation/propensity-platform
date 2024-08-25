@@ -21,14 +21,13 @@ export default function PlayContentView({ play, editHandler }) {
 		}
 	}, [play]);
 	return (
-		<div>
-			<div className='flex justify-between items-center p-4 border border-b-2 border-gray-300 rounded-t-lg'>
-				<h3 className='m-0 text-xl font-semibold'>Content</h3>
+		<div className='bg-white border-t'>
+			<div className='flex justify-between items-center p-4'>
 				<button type='button' onClick={() => editHandler(true)} className='rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
 					Edit
 				</button>
 			</div>
-			<div className='border border-t-0 border-gray-300 rounded-b-lg'>
+			<div>
 				<dl className='divide-y divide-gray-200'>
 					{playFields &&
 						playFields.fields.map((field, index) => {

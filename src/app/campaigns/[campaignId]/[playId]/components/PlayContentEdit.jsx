@@ -41,7 +41,7 @@ export default function EditContent({ play, fields, campaignId, changeHandler, e
 	};
 
 	return (
-		<>
+		<div className='bg-white rounded-lg border border-gray-300'>
 			<div className='flex justify-between items-center px-4 py-5 sm:px-6'>
 				<div>
 					<p className='mt-1 max-w-2xl text-sm leading-6 text-gray-500'>{play.Type__c}</p>
@@ -62,7 +62,7 @@ export default function EditContent({ play, fields, campaignId, changeHandler, e
 			</div>
 			<form id='p__edit-play' onSubmit={submitHandler}>
 				<div className='space-y-12 px-4 py-6'>
-					<div className='border-b border-gray-900/10 pb-1'>
+					<div className='pb-1'>
 						<div className='grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
 							<input type='hidden' name='submit_ad' value='update'></input>
 							<input type='hidden' name='campaign_id' value={campaignId}></input>
@@ -88,6 +88,6 @@ export default function EditContent({ play, fields, campaignId, changeHandler, e
 					</div>
 				</div>
 			</form>
-		</>
+		</div>
 	);
 }

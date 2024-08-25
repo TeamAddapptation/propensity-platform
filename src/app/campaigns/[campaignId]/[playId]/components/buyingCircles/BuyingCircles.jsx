@@ -19,7 +19,7 @@ export default function BuyingCircles({ buyingCircles, connected, campaignId, pl
 	}
 
 	return (
-		<div className='border border-b-2 border-gray-300 rounded-t-lg'>
+		<div className='bg-white rounded-lg border border-gray-300'>
 			<div className='p-4 sm:px-6 flex justify-between items-center'>
 				<div className='flex'>
 					<h3 className='text-xl font-semibold leading-6 text-gray-900'>Buying Circles</h3>

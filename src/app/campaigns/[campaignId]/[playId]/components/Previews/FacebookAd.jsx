@@ -1,5 +1,6 @@
 import { GlobeAmericasIcon, XMarkIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { HandThumbUpIcon, ChatBubbleLeftIcon, ShareIcon } from "@heroicons/react/24/outline";
+import GraphicUpload from "../GraphicUpload";
 import styles from "../../css/facebookAd.module.css";
 
 export default function FacebookAd({ play }) {
@@ -86,6 +87,7 @@ export default function FacebookAd({ play }) {
 					</div>
 				</div>
 			</div>
+			<GraphicUpload />
 		</div>
 	);
 }

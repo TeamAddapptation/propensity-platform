@@ -58,15 +58,15 @@ export const channelFields = {
 		fields: [
 			{ label: "Start Date", value: "Planned_Start_Date__c", type: "date" },
 			{ label: "End Date", value: "Planned_End_Date__c", type: "date" },
-			{ label: "Email Body", value: "Body_Text_Only__c", type: "html" },
 			{ label: "Subject", value: "Subject__c", type: "html" },
+			{ label: "Email Body", value: "Body_Text_Only__c", type: "html" },
 		],
 		editFields: [
 			{ label: "Play Name", keyLink: "name", name: "Name", type: "date", placeholder: "", id: "p__name", span: "col-span-6" },
 			{ label: "Start Date", keyLink: "planned_start", name: "Planned_Start_Date__c", type: "date", placeholder: "", id: "p__planned-state-date", span: "col-span-3" },
 			{ label: "End Date", keyLink: "planned_end", name: "Planned_End_Date__c", type: "date", placeholder: "", id: "p__planned-end-date", span: "col-span-3" },
-			{ label: "Email Body", keyLink: "body", name: "Body_Text_Only__c", type: "textarea", placeholder: "", id: "p__subject", span: "col-span-6" },
 			{ label: "Subject", keyLink: "subject", name: "Subject__c", type: "text", placeholder: "", id: "p__body", span: "col-span-6" },
+			{ label: "Email Body", keyLink: "body", name: "Body_Text_Only__c", type: "textarea", placeholder: "", id: "p__subject", span: "col-span-6" },
 		],
 	},
 	linkedin: {

@@ -10,6 +10,7 @@ import LinkedinAd from "./components/Previews/LinkedInAd";
 import MarketingEmail from "./components/Previews/MarketingEmail";
 import Loading from "@/app/components/Loading";
 import { adIcon } from "@/app/utilities/helpers";
+import Accordion from "@/app/components/Accordion";
 
 export default function Play({ params }) {
 	const [fetchedPlayData, setFetchedPlayData] = useState({});
@@ -131,8 +132,8 @@ export default function Play({ params }) {
 
 	console.log("Play: ", fetchedPlayData);
 	return (
-		<div className='rounded-lg bg-white m-4'>
-			<div className='overflow-hidden border-b border-gray-200 mb-4'>
+		<div className='rounded-lg m-4'>
+			<div className='overflow-hidden border border-gray-200 mb-4 bg-white rounded-lg'>
 				<h2 id='play-overview-title' className='sr-only'>
 					Play Overview
 				</h2>
@@ -154,24 +155,38 @@ export default function Play({ params }) {
 					</div>
 				</div>
 			</div>
-			<div className='grid grid-cols-1 md:grid-cols-12'>
-				<div className='md:col-span-6 bg-white px-3'>
-					<div className='mb-5'>
-						{editMode ? (
-							<PlayContentEdit play={play} fields={playFields} editHandler={editHandler} mutate={mutate} campaignId={params.campaignId} changeHandler={changeHandler} />
-						) : (
-							<PlayContentView play={play} type={playType} editHandler={editHandler} />
-						)}
+			<div className='grid grid-cols-1 md:grid-cols-12 gap-4'>
+				<div className='md:col-span-6'>
+					<div className='border border-gray-200'>
+						<Accordion title={"Content"} open={true}>
+							{editMode ? (
+								<PlayContentEdit play={play} fields={playFields} editHandler={editHandler} mutate={mutate} campaignId={params.campaignId} changeHandler={changeHandler} />
+							) : (
+								<PlayContentView play={play} type={playType} editHandler={editHandler} />
+							)}
+						</Accordion>
+						<Accordion title={"Launch Settings"} open={false}>
+							<form className='space-y-4'>
+								<input type='text' placeholder='Your Name' className='w-full p-2 border border-gray-300 rounded' />
+								<input type='email' placeholder='Your Email' className='w-full p-2 border border-gray-300 rounded' />
+								<textarea placeholder='Your Message' className='w-full p-2 border border-gray-300 rounded' />
+								<button type='submit' className='bg-blue-500 text-white p-2 rounded'>
+									Submit
+								</button>
+							</form>
+						</Accordion>
+						<Accordion title={"Buying Circles"} open={false}>
+							<BuyingCircles
+								connected={fetchedPlayData.connected_buying_circles}
+								buyingCircles={fetchedPlayData.buying_circles}
+								campaignId={params.campaignId}
+								outline={playFields}
+								playId={params.playId}
+								type={play.Type__c}
+								dataVersionHandler={dataVersionHandler}
+							/>
+						</Accordion>
 					</div>
-					<BuyingCircles
-						connected={fetchedPlayData.connected_buying_circles}
-						buyingCircles={fetchedPlayData.buying_circles}
-						campaignId={params.campaignId}
-						outline={playFields}
-						playId={params.playId}
-						type={play.Type__c}
-						dataVersionHandler={dataVersionHandler}
-					/>
 				</div>
 				<div className='md:col-span-6'>
 					{playType == "Facebook Ad" ? <FacebookAd play={play} /> : ""}
