@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, Menu, MenuButton, MenuItem, MenuItems, TransitionChild } from "@headlessui/react";
-import { Bars3Icon, BellIcon, Cog6ToothIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BellIcon, Cog6ToothIcon, HomeIcon, UsersIcon, XMarkIcon, BuildingOffice2Icon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 const navigation = [
 	{ name: "Dashboard", href: "/", icon: HomeIcon, current: true },
+	{ name: "Audiences", href: "/audiences", icon: BuildingOffice2Icon, current: false },
 	{ name: "ABM Campaigns", href: "/campaigns", icon: UsersIcon, current: false },
 ];
 const teams = [
