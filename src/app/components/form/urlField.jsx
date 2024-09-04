@@ -5,7 +5,7 @@ export default function UrlField({ label, name, placeholder, id, play, span }) {
 			<label htmlFor='company-website' className='block text-sm font-medium leading-6 text-gray-900'>
 				{label}
 			</label>
-			<div className='mt-2'>
+			<div className='mt-1'>
 				<div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600'>
 					<span className='flex select-none items-center pl-3 text-gray-500 sm:text-sm'>http://</span>
 					<input

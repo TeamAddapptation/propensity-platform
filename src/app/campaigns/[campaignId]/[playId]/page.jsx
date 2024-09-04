@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import PlayContentView from "./components/PlayContentView";
 import PlayContentEdit from "./components/PlayContentEdit";
+import PlayLaunchEdit from "./components/PlayLaunchEdit";
 import BuyingCircles from "./components/buyingCircles/BuyingCircles";
+import Graphics from "./components/Graphics";
 import { channelFields } from "./playData/channelFields";
 import FacebookAd from "./components/Previews/FacebookAd";
 import LinkedinAd from "./components/Previews/LinkedInAd";
@@ -14,7 +16,7 @@ import Accordion from "@/app/components/Accordion";
 
 export default function Play({ params }) {
 	const [fetchedPlayData, setFetchedPlayData] = useState({});
-	const [editMode, setEditMode] = useState(false);
+	const [editMode, setEditMode] = useState(true);
 	const [playFields, setPlayFields] = useState("");
 	const [playType, setPlayType] = useState(undefined);
 	const [dataVersion, setDataVersion] = useState(0);
@@ -54,7 +56,6 @@ export default function Play({ params }) {
 	function dataVersionHandler() {
 		setDataVersion((prevVersion) => prevVersion + 1);
 	}
-
 	const {
 		data: playData,
 		error,
@@ -62,14 +63,13 @@ export default function Play({ params }) {
 	} = useQuery({
 		queryKey: ["play", params.campaignId, params.playId],
 		queryFn: async () => {
-			const res = await fetch(
-				`https://t-propensity-react.addapptation.com/account_lists_data?api_key=6d5b9cb6-d85e-43c8-a892-b9c18dd77bac&play_buying_circles=true&campaign_id=${params.campaignId}&play_id=${params.playId}`
-			);
+			const res = await fetch(`${process.env.NEXT_PUBLIC_API_READ}&play_buying_circles=true&campaign_id=${params.campaignId}&play_id=${params.playId}`);
 			const data = await res.json();
 			return data;
 		},
 	});
 
+	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async (updatePlay) => {
 			const response = await fetch("https://t-propensity-dashboard.addapptation.com/data_write?api_key=6d5b9cb6-d85e-43c8-a892-b9c18dd77bac&update_play=true", {
@@ -85,6 +85,10 @@ export default function Play({ params }) {
 			}
 
 			return response.json();
+		},
+		onSuccess: () => {
+			// Invalidate the query to refetch the play data
+			queryClient.invalidateQueries(["play"]);
 		},
 	});
 
@@ -109,6 +113,7 @@ export default function Play({ params }) {
 	if (!play) {
 		return <p>No play data found</p>;
 	}
+	console.log("Play Data: ", fetchedPlayData);
 
 	// Status badge rendering
 	function getStatusBadge(status) {
@@ -130,7 +135,6 @@ export default function Play({ params }) {
 		}
 	}
 
-	console.log("Play: ", fetchedPlayData);
 	return (
 		<div className='rounded-lg m-4'>
 			<div className='overflow-hidden border border-gray-200 mb-4 bg-white rounded-lg'>
@@ -158,24 +162,22 @@ export default function Play({ params }) {
 			<div className='grid grid-cols-1 md:grid-cols-12 gap-4'>
 				<div className='md:col-span-6'>
 					<div className='border border-gray-200'>
-						<Accordion title={"Content"} open={true}>
+						<Accordion title={"Content"} open={true} status={true}>
 							{editMode ? (
 								<PlayContentEdit play={play} fields={playFields} editHandler={editHandler} mutate={mutate} campaignId={params.campaignId} changeHandler={changeHandler} />
 							) : (
 								<PlayContentView play={play} type={playType} editHandler={editHandler} />
 							)}
 						</Accordion>
-						<Accordion title={"Launch Settings"} open={false}>
-							<form className='space-y-4'>
-								<input type='text' placeholder='Your Name' className='w-full p-2 border border-gray-300 rounded' />
-								<input type='email' placeholder='Your Email' className='w-full p-2 border border-gray-300 rounded' />
-								<textarea placeholder='Your Message' className='w-full p-2 border border-gray-300 rounded' />
-								<button type='submit' className='bg-blue-500 text-white p-2 rounded'>
-									Submit
-								</button>
-							</form>
+
+						<Accordion title={"Graphics"} open={false} status={false}>
+							<Graphics assets={fetchedPlayData.assets}></Graphics>
 						</Accordion>
-						<Accordion title={"Buying Circles"} open={false}>
+
+						<Accordion title={"Launch Settings"} open={false} status={false}>
+							<PlayLaunchEdit play={play} fields={playFields} editHandler={editHandler} mutate={mutate} campaignId={params.campaignId} />
+						</Accordion>
+						<Accordion title={"Buying Circles"} open={false} status={true}>
 							<BuyingCircles
 								connected={fetchedPlayData.connected_buying_circles}
 								buyingCircles={fetchedPlayData.buying_circles}

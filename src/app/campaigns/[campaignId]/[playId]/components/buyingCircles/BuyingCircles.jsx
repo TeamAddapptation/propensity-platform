@@ -19,17 +19,12 @@ export default function BuyingCircles({ buyingCircles, connected, campaignId, pl
 	}
 
 	return (
-		<div className='bg-white rounded-lg border border-gray-300'>
-			<div className='p-4 sm:px-6 flex justify-between items-center'>
-				<div className='flex'>
-					<h3 className='text-xl font-semibold leading-6 text-gray-900'>Buying Circles</h3>
-					{/* <p>Connected Contacts: {connected.reduce((sum, item) => sum + item.Total__c, 0)}</p> */}
-				</div>
-
+		<div className='bg-white'>
+			{/* <div className='p-4 sm:px-6 flex justify-between items-center'>
 				<button type='button' onClick={() => editHandler()} className='rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
 					{editBuyingCircles ? "Save" : "Edit"}
 				</button>
-			</div>
+			</div> */}
 			<div className='border-t border-gray-100 px-4 py-5 sm:px-6 '>
 				<div>
 					{editBuyingCircles ? (

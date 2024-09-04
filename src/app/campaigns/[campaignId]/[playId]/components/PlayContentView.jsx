@@ -22,18 +22,13 @@ export default function PlayContentView({ play, editHandler }) {
 	}, [play]);
 	return (
 		<div className='bg-white border-t'>
-			<div className='flex justify-between items-center p-4'>
-				<button type='button' onClick={() => editHandler(true)} className='rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
-					Edit
-				</button>
-			</div>
 			<div>
 				<dl className='divide-y divide-gray-200'>
 					{playFields &&
 						playFields.fields.map((field, index) => {
 							return (
 								<div key={index} className='px-3 py-4 sm:grid sm:grid-cols-1 sm:gap-1 sm:px-6'>
-									<dt className='text-sm font-medium text-gray-900'>{field.label}</dt>
+									<dt className='text-sm font-medium text-slate-700'>{field.label}</dt>
 									<dd className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
 										{field.type === "date" ? (
 											play[field.value] ? (
@@ -57,6 +52,15 @@ export default function PlayContentView({ play, editHandler }) {
 							);
 						})}
 				</dl>
+			</div>
+			<div className='flex justify-end pb-8 px-4'>
+				<button
+					type='button'
+					onClick={() => editHandler(true)}
+					className='rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"'
+				>
+					Edit Content
+				</button>
 			</div>
 		</div>
 	);

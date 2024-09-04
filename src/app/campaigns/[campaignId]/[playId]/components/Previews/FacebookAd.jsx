@@ -4,7 +4,6 @@ import GraphicUpload from "../GraphicUpload";
 import styles from "../../css/facebookAd.module.css";
 
 export default function FacebookAd({ play }) {
-	console.log("Preview Facebook: ", play);
 	function toSentenceCase(text) {
 		let words = text.split("_");
 		let titleCasedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());

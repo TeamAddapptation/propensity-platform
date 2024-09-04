@@ -4,6 +4,7 @@ export const channelFields = {
 		play_name: "name",
 		min_contacts: 100,
 		fields: [
+			{ label: "Play Name", value: "Name", type: "text" },
 			{ label: "Start Date", value: "Planned_Start_Date__c", type: "date" },
 			{ label: "End Date", value: "Planned_End_Date__c", type: "date" },
 			{ label: "Primary Text", value: "Body_Text_Only__c", type: "html" },
@@ -12,7 +13,7 @@ export const channelFields = {
 			{ label: "Call to Action", value: "Call_To_Action__c" },
 		],
 		editFields: [
-			{ label: "Play Name", keyLink: "name", name: "Name", type: "date", placeholder: "", id: "p__name", span: "col-span-6" },
+			{ label: "Play Name", keyLink: "name", name: "Name", type: "text", placeholder: "", id: "p__name", span: "col-span-6" },
 			{ label: "Start Date", keyLink: "planned_start", name: "Planned_Start_Date__c", type: "date", placeholder: "", id: "p__planned-state-date", span: "col-span-3" },
 			{ label: "End Date", keyLink: "planned_end", name: "Planned_End_Date__c", type: "date", placeholder: "", id: "p__planned-end-date", span: "col-span-3" },
 			{ label: "Primary Text", keyLink: "body", name: "Body_Text_Only__c", type: "textarea", placeholder: "", id: "p__subject", span: "col-span-6" },
@@ -50,6 +51,24 @@ export const channelFields = {
 				],
 			},
 		],
+		launchFields: [
+			{
+				label: "Campaign Objective",
+				keyLink: "name",
+				name: "campaign_objective",
+				type: "select",
+				placeholder: "",
+				id: "p__campaign-objective",
+				span: "col-span-6",
+				options: [
+					{ value: "OUTCOME_AWARENESS", text: "Awareness", selected: false },
+					{ value: "OUTCOME_ENGAGEMENT", text: "Engagement", selected: false },
+					{ value: "OUTCOME_TRAFFIC", text: "Traffic", selected: false },
+				],
+			},
+			{ label: "Daily Budget", keyLink: "daily_budget", name: "campaign_objective", type: "text", placeholder: "", id: "p__campaign-objective", span: "col-span-6" },
+			{ label: "Bid Amount", keyLink: "big_amount", name: "bid_amount", type: "text", placeholder: "", id: "p__bid-amount", span: "col-span-6" },
+		],
 	},
 	marketingEmail: {
 		type: "Marketing Email",
@@ -62,7 +81,7 @@ export const channelFields = {
 			{ label: "Email Body", value: "Body_Text_Only__c", type: "html" },
 		],
 		editFields: [
-			{ label: "Play Name", keyLink: "name", name: "Name", type: "date", placeholder: "", id: "p__name", span: "col-span-6" },
+			{ label: "Play Name", keyLink: "name", name: "Name", type: "text", placeholder: "", id: "p__name", span: "col-span-6" },
 			{ label: "Start Date", keyLink: "planned_start", name: "Planned_Start_Date__c", type: "date", placeholder: "", id: "p__planned-state-date", span: "col-span-3" },
 			{ label: "End Date", keyLink: "planned_end", name: "Planned_End_Date__c", type: "date", placeholder: "", id: "p__planned-end-date", span: "col-span-3" },
 			{ label: "Subject", keyLink: "subject", name: "Subject__c", type: "text", placeholder: "", id: "p__body", span: "col-span-6" },

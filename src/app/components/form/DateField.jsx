@@ -2,10 +2,10 @@
 export default function DateField({ label, name, placeholder, id, play, span }) {
 	return (
 		<div className={span}>
-			<label htmlFor='username' className='block text-sm font-medium leading-6 text-gray-900'>
+			<label htmlFor='username' className='block text-sm font-medium leading-6 text-slate-600'>
 				{label}
 			</label>
-			<div className='mt-2'>
+			<div className='mt-1'>
 				<div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md'>
 					<input
 						type='date'
