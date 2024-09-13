@@ -6,6 +6,7 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid"
 
 const navigation = [
 	{ name: "Dashboard", href: "/", icon: HomeIcon, current: true },
+	{ name: "Audience", href: "/audience", icon: UsersIcon, current: false },
 	{ name: "ABM Campaigns", href: "/campaigns", icon: UsersIcon, current: false },
 ];
 const teams = [

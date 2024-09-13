@@ -30,8 +30,8 @@ export default function PlaysTable({ campaignId, playsData }) {
 			header: "Run Date",
 			classes: "text-center",
 			cell: (info) => (
-				<div class='text-center'>
-					<p class='text-xs'>
+				<div className='text-center'>
+					<p className='text-xs'>
 						{formatDate(info.row.original.planned_start)} - {formatDate(info.row.original.planned_end)}
 					</p>
 				</div>
@@ -40,7 +40,7 @@ export default function PlaysTable({ campaignId, playsData }) {
 		columnHelper.accessor("status", {
 			header: "Status",
 			classes: "text-center",
-			cell: (info) => <div class='text-center'>{statusBadge(info.row.original.status)}</div>,
+			cell: (info) => <div className='text-center'>{statusBadge(info.row.original.status)}</div>,
 		}),
 
 		columnHelper.accessor("actions", {

@@ -8,12 +8,11 @@ const formatDate = (dateString) => {
 };
 
 const adIcon = (type, size, logoSize) => {
-	console.log(type);
 	switch (type.toLowerCase()) {
 		case "direct mail":
 			return (
 				<div className={`flex justify-center items-center ${size} rounded-full`} style={{ backgroundColor: "#008080" }}>
-					<i class={`fas fa-mailbox text-white ${logoSize}`}></i>
+					<i className={`fas fa-mailbox text-white ${logoSize}`}></i>
 				</div>
 			);
 		case "facebook ad":
