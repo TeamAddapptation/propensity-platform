@@ -1,31 +1,13 @@
-import { useState, useEffect } from "react";
-import { channelFields } from "../playData/channelFields";
 import { formatDate } from "@/app/utilities/helpers";
 
-export default function PlayContentView({ play, editHandler }) {
-	const [playFields, setPlayFields] = useState("");
-	useEffect(() => {
-		// Handle setting play fields based on play type
-		switch (play.Type__c) {
-			case "Facebook Ad":
-				setPlayFields(channelFields.facebook);
-				break;
-			case "LinkedIn Ad":
-				setPlayFields(channelFields.linkedin);
-				break;
-			case "Marketing Email":
-				setPlayFields(channelFields.marketingEmail);
-				break;
-			default:
-				setPlayFields(null);
-		}
-	}, [play]);
+export default function PlayContentView({ play, fields, editHandler }) {
+	console.log("Fields: ", fields);
 	return (
 		<div className='bg-white border-t'>
 			<div>
 				<dl className='divide-y divide-gray-200'>
-					{playFields &&
-						playFields.fields.map((field, index) => {
+					{fields &&
+						fields.view.map((field, index) => {
 							return (
 								<div key={index} className='px-3 py-4 sm:grid sm:grid-cols-1 sm:gap-1 sm:px-6'>
 									<dt className='text-sm font-medium text-slate-700'>{field.label}</dt>

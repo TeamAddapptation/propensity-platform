@@ -30,7 +30,7 @@ export default function BuyingCircles({ buyingCircles, connected, campaignId, pl
 					{editBuyingCircles ? (
 						<EditBuyingCircles connected={connected} filteredBuyingCircles={filteredBuyingCircles} campaignId={campaignId} playId={playId} dataVersionHandler={dataVersionHandler} outline={outline} />
 					) : (
-						<ViewBuyingCircles connected={connected} filteredBuyingCircles={filteredBuyingCircles} outline={outline} />
+						<ViewBuyingCircles connected={connected} filteredBuyingCircles={filteredBuyingCircles} campaignId={campaignId} playId={playId} outline={outline} />
 					)}
 				</div>
 			</div>

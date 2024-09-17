@@ -1,16 +1,50 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { EllipsisVerticalIcon, UserGroupIcon } from "@heroicons/react/20/solid";
-import { connectBuyingCircleHandler, disconnectBuyingCircleHandler } from "@/app/utilities/buyingCircleFunctions";
-import { classNames } from "@/app/utilities/helpers";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { UserGroupIcon } from "@heroicons/react/20/solid";
 
-export default function ViewBuyingCircles({ connected, filteredBuyingCircles, outline }) {
-	const addHandler = (id, campaignId, playId) => {
-		connectBuyingCircleHandler(id, campaignId, playId);
-		dataVersionHandler();
-	};
+export default function ViewBuyingCircles({ connected, filteredBuyingCircles, campaignId, playId, outline, mutate }) {
+	const [loadingStatus, setLoadingStatus] = useState({}); // Track the loading status of each buying circle
+	const queryClient = useQueryClient();
+
+	const { mutate: connectBuyingCircle } = useMutation({
+		mutationFn: async ({ connect, id, campaignId, playId }) => {
+			setLoadingStatus((prevState) => ({
+				...prevState,
+				[id]: connect ? "connecting" : "disconnecting",
+			}));
+
+			const buyingCircleAction = connect ? "connect=true" : "disconnect=true";
+			const response = await fetch(`https://t-propensity-react.addapptation.com/data_write?api_key=6d5b9cb6-d85e-43c8-a892-b9c18dd77bac&buying_circle_connect=true&${buyingCircleAction}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ campaign_id: campaignId, play_id: playId, bc_id: id }),
+			});
+
+			if (!response.ok) {
+				throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+			}
+
+			const data = await response.json();
+			return data;
+		},
+		onSuccess: (data, { id, connect }) => {
+			queryClient.invalidateQueries(["buyingCircles", campaignId, playId]);
+			setLoadingStatus((prevState) => ({
+				...prevState,
+				[id]: connect ? "connected" : "disconnected",
+			}));
+		},
+		onError: (error, { id }) => {
+			console.error("Error connecting/disconnecting buying circle:", error);
+			setLoadingStatus((prevState) => ({
+				...prevState,
+				[id]: null,
+			}));
+		},
+	});
 
 	function renderStatusIndicator(text) {
 		return (
@@ -22,6 +56,7 @@ export default function ViewBuyingCircles({ connected, filteredBuyingCircles, ou
 			</span>
 		);
 	}
+
 	return (
 		<>
 			{/* Connected Buying Circles */}
@@ -40,15 +75,24 @@ export default function ViewBuyingCircles({ connected, filteredBuyingCircles, ou
 						<span className='mt-2 block text-sm font-semibold text-gray-400'>No Connected Buying Circles</span>
 					</div>
 				) : (
-					<ul role='list' className='px-4 py-2'>
+					<ul role='list' className='flex flex-col gap-2'>
 						{connected.map((buyingCircle, index) => (
-							<li key={index} className='flex items-center justify-between gap-x-6 py-2'>
-								<div className='min-w-0'>
-									<div className='flex items-start gap-x-3'>
-										<p className='text-sm leading-6 text-gray-900'>{buyingCircle.Buying_Circle__r.Name}</p>
-									</div>
+							<li key={index} className='flex items-center justify-between gap-x-6 p-2 border rounded border-gray-300'>
+								<div className='flex items-start gap-x-3'>
+									<p className='text-sm leading-6 text-gray-900'>{buyingCircle.Buying_Circle__r.Name}</p>
 								</div>
-								<div className='flex flex-none items-center gap-x-4'></div>
+								<div className='flex ml-auto'>
+									<button
+										type='button'
+										onClick={() => connectBuyingCircle({ connect: false, id: buyingCircle.Id, campaignId, playId })}
+										className={`bg-white rounded-md px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 ${
+											loadingStatus[buyingCircle.Id] ? "opacity-50 animate-pulse" : ""
+										}`}
+										disabled={loadingStatus[buyingCircle.Id] === "connecting" || loadingStatus[buyingCircle.Id] === "disconnecting"}
+									>
+										{loadingStatus[buyingCircle.Id] === "disconnecting" ? "Disconnecting..." : "Disconnect"}
+									</button>
+								</div>
 							</li>
 						))}
 					</ul>
@@ -61,7 +105,7 @@ export default function ViewBuyingCircles({ connected, filteredBuyingCircles, ou
 						<div className='w-full border-t border-gray-300' />
 					</div>
 					<div className='relative flex justify-start'>
-						<span className='bg-white pr-3 text-sm font-medium leading-6 text-slate-700'>Buying Cricles</span>
+						<span className='bg-white pr-3 text-sm font-medium leading-6 text-slate-700'>Buying Circles</span>
 					</div>
 				</div>
 				{filteredBuyingCircles && filteredBuyingCircles.length === 0 ? (
@@ -90,10 +134,13 @@ export default function ViewBuyingCircles({ connected, filteredBuyingCircles, ou
 									{buyingCircle.Total__c > outline.min_contacts && buyingCircle.Enriched__c && (
 										<button
 											type='button'
-											onClick={() => addHandler(buyingCircle.Id, campaignId, playId)}
-											className='bg-white rounded-md px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+											onClick={() => connectBuyingCircle({ connect: true, id: buyingCircle.Id, campaignId, playId })}
+											className={`bg-white rounded-md px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 ${
+												loadingStatus[buyingCircle.Id] ? "opacity-50 animate-pulse" : ""
+											}`}
+											disabled={loadingStatus[buyingCircle.Id] === "connecting" || loadingStatus[buyingCircle.Id] === "disconnecting"}
 										>
-											Connect
+											{loadingStatus[buyingCircle.Id] === "connecting" ? "Connecting..." : "Connect"}
 										</button>
 									)}
 								</div>

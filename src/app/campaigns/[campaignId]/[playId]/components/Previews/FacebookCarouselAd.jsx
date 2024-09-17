@@ -1,14 +1,25 @@
+import { useState } from "react";
 import { GlobeAmericasIcon, XMarkIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { HandThumbUpIcon, ChatBubbleLeftIcon, ShareIcon } from "@heroicons/react/24/outline";
-import GraphicUpload from "../GraphicUpload";
 import styles from "../../css/facebookAd.module.css";
 
-export default function FacebookAd({ play }) {
+export default function FacebookCarouselAd({ play, assets }) {
+	const images = assets.filter((asset) => asset.has_asset);
+	const [currentIndex, setCurrentIndex] = useState(0);
+
 	function toSentenceCase(text) {
 		let words = text.split("_");
 		let titleCasedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
 		return titleCasedWords.join(" ");
 	}
+
+	const handlePrev = () => {
+		setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+	};
+
+	const handleNext = () => {
+		setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+	};
 
 	return (
 		<div className='border rounded'>
@@ -50,9 +61,21 @@ export default function FacebookAd({ play }) {
 							<p className='text-sm py-3 whitespace-pre-wrap'>Primary text here</p>
 						)}
 					</div>
-					{/* Display Image */}
-					<div>
-						<div className={styles.p__image}></div>
+					{/* Display Image Carousel */}
+					<div className='relative overflow-hidden'>
+						<div className='flex transition-transform duration-500' style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+							{images.map((image, index) => (
+								<img key={index} src={image.image} alt={`Slide ${index}`} className='w-full flex-shrink-0' />
+							))}
+						</div>
+						{/* Previous Button */}
+						<button className='absolute top-1/2 left-0 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2' onClick={handlePrev}>
+							{"<"}
+						</button>
+						{/* Next Button */}
+						<button className='absolute top-1/2 right-0 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2' onClick={handleNext}>
+							{">"}
+						</button>
 					</div>
 					{/* Headline & Button */}
 					<div className='p-2 py-4 bg-slate-50 flex justify-between items-center'>

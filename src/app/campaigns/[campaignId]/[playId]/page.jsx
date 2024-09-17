@@ -8,11 +8,14 @@ import BuyingCircles from "./components/buyingCircles/BuyingCircles";
 import Graphics from "./components/Graphics";
 import { channelFields } from "./playData/channelFields";
 import FacebookAd from "./components/Previews/FacebookAd";
+import FacebookCarouselAd from "./components/Previews/FacebookCarouselAd";
 import LinkedinAd from "./components/Previews/LinkedInAd";
 import MarketingEmail from "./components/Previews/MarketingEmail";
+import DisplayAd from "./components/Previews/DisplayAd";
 import Loading from "@/app/components/Loading";
 import { adIcon } from "@/app/utilities/helpers";
 import Accordion from "@/app/components/Accordion";
+import Review from "./components/Review";
 
 export default function Play({ params }) {
 	const [fetchedPlayData, setFetchedPlayData] = useState({});
@@ -26,13 +29,20 @@ export default function Play({ params }) {
 		setPlayType(type);
 		switch (type) {
 			case "Facebook Ad":
+			case "Facebook Carousel Ad":
 				setPlayFields(channelFields.facebook);
+				break;
+			case "Google Display Ad":
+				setPlayFields(channelFields.googleDisplayAd);
 				break;
 			case "LinkedIn Ad":
 				setPlayFields(channelFields.linkedin);
 				break;
 			case "Marketing Email":
 				setPlayFields(channelFields.marketingEmail);
+				break;
+			case "Programmatic Display Ad":
+				setPlayFields(channelFields.programmaticDisplayAd);
 				break;
 			default:
 				setPlayFields(null);
@@ -166,7 +176,7 @@ export default function Play({ params }) {
 							{editMode ? (
 								<PlayContentEdit play={play} fields={playFields} editHandler={editHandler} mutate={mutate} campaignId={params.campaignId} changeHandler={changeHandler} />
 							) : (
-								<PlayContentView play={play} type={playType} editHandler={editHandler} />
+								<PlayContentView play={play} fields={playFields} editHandler={editHandler} />
 							)}
 						</Accordion>
 
@@ -185,15 +195,20 @@ export default function Play({ params }) {
 								outline={playFields}
 								playId={params.playId}
 								type={play.Type__c}
-								dataVersionHandler={dataVersionHandler}
+								mutate={mutate}
 							/>
 						</Accordion>
 					</div>
 				</div>
 				<div className='md:col-span-6'>
 					{playType == "Facebook Ad" ? <FacebookAd play={play} /> : ""}
+					{playType == "Facebook Carousel Ad" ? <FacebookCarouselAd play={play} assets={fetchedPlayData.assets} /> : ""}
 					{playType == "Marketing Email" ? <MarketingEmail play={play} /> : ""}
 					{playType == "LinkedIn Ad" ? <LinkedinAd play={play} /> : ""}
+					{playType == "Google Display Ad" || playType == "Programmatic Display Ad" ? <DisplayAd assets={fetchedPlayData.assets} /> : ""}
+					<div className='p__review'>
+						<Review play={play} />
+					</div>
 				</div>
 			</div>
 		</div>

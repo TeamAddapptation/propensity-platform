@@ -2,7 +2,7 @@ import { getCampaignData } from "./getCampaignData";
 
 async function connectBuyingCircleHandler(id, campaignId, playId) {
 	try {
-		const response = await fetch(`https://t-propensity-dashboard.addapptation.com/data_write?api_key=6d5b9cb6-d85e-43c8-a892-b9c18dd77bac&buying_circle_connect=true&connect=true`, {
+		const response = await fetch(`https://t-propensity-react.addapptation.com/data_write?api_key=6d5b9cb6-d85e-43c8-a892-b9c18dd77bac&buying_circle_connect=true&connect=true`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -17,8 +17,7 @@ async function connectBuyingCircleHandler(id, campaignId, playId) {
 		}
 
 		const data = await response.json();
-		const campaign = await getCampaignData(campaignId);
-		console.log("Form submitted successfully:", data);
+		console.log("Buying Circles: ", data);
 		return true;
 	} catch (error) {
 		console.error("Error submitting form:", error);

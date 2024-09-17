@@ -1,3 +1,4 @@
+import CurrencyField from "@/app/components/form/CurrencyField";
 import TextField from "@/app/components/form/TextField";
 import SelectField from "@/app/components/form/SelectField";
 import DateField from "@/app/components/form/DateField";
@@ -40,22 +41,8 @@ export default function LaunchEdit({ play, fields, campaignId, editHandler, muta
 
 	return (
 		<div className='bg-white'>
-			<div className='flex justify-between items-center px-4 py-5 sm:px-6'>
-				<div className='flex gap-2'>
-					<button type='button' onClick={() => editHandler(false, true)} className='text-sm font-semibold leading-6 text-indigo-400'>
-						Cancel
-					</button>
-					<button
-						type='submit'
-						form='p__edit-play'
-						className='inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
-					>
-						Save
-					</button>
-				</div>
-			</div>
 			<form id='p__edit-play' onSubmit={submitHandler}>
-				<div className='space-y-12 px-4 py-6'>
+				<div className='space-y-12 px-4 py-2'>
 					<div className='pb-1'>
 						<div className='grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6'>
 							<input type='hidden' name='submit_ad' value='update'></input>
@@ -64,6 +51,8 @@ export default function LaunchEdit({ play, fields, campaignId, editHandler, muta
 							{fields &&
 								fields.launchFields.map((formField, index) => {
 									switch (formField.type) {
+										case "currency":
+											return <CurrencyField key={index} {...formField} play={play} />;
 										case "date":
 											return <DateField key={index} {...formField} play={play} />;
 										case "select":
@@ -82,6 +71,20 @@ export default function LaunchEdit({ play, fields, campaignId, editHandler, muta
 					</div>
 				</div>
 			</form>
+			<div className='flex justify-end items-center p-4 pb-8 sm:px-6'>
+				<div className='flex gap-2'>
+					<button type='button' onClick={() => editHandler(false, true)} className='text-xs font-semi leading-6 text-indigo-400'>
+						Cancel
+					</button>
+					<button
+						type='submit'
+						form='p__edit-play'
+						className='rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+					>
+						Save
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 }

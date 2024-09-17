@@ -5,7 +5,7 @@ export default function Graphics({ assets }) {
 	const assetColumns = [
 		columnHelper.accessor("image", {
 			header: "Image",
-			id: "actions",
+			id: "image",
 			cell: ({ row }) => (
 				<div className='flex justify-center gap-2 w-16'>
 					<img src={row.original.image} />
@@ -14,11 +14,11 @@ export default function Graphics({ assets }) {
 		}),
 		columnHelper.accessor("description", {
 			header: "Details",
-			id: "actions",
+			id: "details",
 			cell: ({ row }) => (
 				<div className='flex flex-col justify-center gap-2 w-16'>
-					<p class='text-sm'>{row.original.image_name}</p>
-					<p class='text-xs'>{row.original.size}</p>
+					<p className='text-sm'>{row.original.image_name}</p>
+					<p className='text-xs'>{row.original.size}</p>
 				</div>
 			),
 		}),
@@ -56,8 +56,8 @@ export default function Graphics({ assets }) {
 											))}
 										</thead>
 										<tbody className='divide-y divide-gray-200 bg-white'>
-											{table.getRowModel().rows.map((row) => (
-												<tr key={row.id}>
+											{table.getRowModel().rows.map((row, index) => (
+												<tr key={index}>
 													{row.getVisibleCells().map((cell) => (
 														<td key={cell.id} className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
 															{flexRender(cell.column.columnDef.cell, cell.getContext())}
