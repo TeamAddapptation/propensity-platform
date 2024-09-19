@@ -206,9 +206,7 @@ export default function Play({ params }) {
 					{playType == "Marketing Email" ? <MarketingEmail play={play} /> : ""}
 					{playType == "LinkedIn Ad" ? <LinkedinAd play={play} /> : ""}
 					{playType == "Google Display Ad" || playType == "Programmatic Display Ad" ? <DisplayAd assets={fetchedPlayData.assets} /> : ""}
-					<div className='p__review'>
-						<Review play={play} />
-					</div>
+					<div className='p__review'>{playType == "Google Display Ad" ? <Review play={play} /> : ""}</div>
 				</div>
 			</div>
 		</div>

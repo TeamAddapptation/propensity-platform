@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, Menu, MenuButton, MenuItem, MenuItems, TransitionChild } from "@headlessui/react";
 import { Bars3Icon, BellIcon, Cog6ToothIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { useAppContext } from "@/context/index";
+import Link from "next/link";
 
 const navigation = [
 	{ name: "Dashboard", href: "/", icon: HomeIcon, current: true },
@@ -24,6 +26,9 @@ function classNames(...classes) {
 
 export default function SidebarNav() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+
+	const { userData } = useAppContext();
+	console.log("User DAta: ", userData);
 	return (
 		<div>
 			<Dialog open={sidebarOpen} onClose={setSidebarOpen} className='relative z-50 lg:hidden'>
@@ -86,10 +91,10 @@ export default function SidebarNav() {
 										</ul>
 									</li>
 									<li className='mt-auto'>
-										<a href='#' className='group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white'>
+										<Link href='/settings' className='group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white'>
 											<Cog6ToothIcon aria-hidden='true' className='h-6 w-6 shrink-0' />
 											Settings
-										</a>
+										</Link>
 									</li>
 								</ul>
 							</nav>
@@ -147,10 +152,10 @@ export default function SidebarNav() {
 								</ul>
 							</li>
 							<li className='mt-auto'>
-								<a href='#' className='group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white'>
+								<Link href='/settings' className='group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white'>
 									<Cog6ToothIcon aria-hidden='true' className='h-6 w-6 shrink-0' />
 									Settings
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</nav>
@@ -168,7 +173,11 @@ export default function SidebarNav() {
 					<div aria-hidden='true' className='h-6 w-px bg-gray-900/10 lg:hidden' />
 
 					<div className='flex items-center flex-1 gap-x-4 self-stretch lg:gap-x-6'>
-						<h4 className='relative flex flex-1 text-lg text-gray-400'>Workspace Name</h4>
+						<div className='flex flex-col flex-1'>
+							<p className='relative flex text-xs text-gray-400 uppercase'>{userData?.Access_Level__c || ""}</p>
+							<h4 className='relative flex text-lg text-gray-500'>{userData?.Name || "Workspace"}</h4>
+						</div>
+
 						<div className='flex items-center gap-x-4 lg:gap-x-6'>
 							<button type='button' className='-m-2.5 p-2.5 text-gray-400 hover:text-gray-500'>
 								<span className='sr-only'>View notifications</span>
@@ -189,7 +198,7 @@ export default function SidebarNav() {
 									/>
 									<span className='hidden lg:flex lg:items-center'>
 										<span aria-hidden='true' className='ml-4 text-sm font-semibold leading-6 text-gray-900'>
-											Jason Bean
+											{userData?.First_Name__c || ""} {userData?.Last_Name__c || ""}
 										</span>
 										<ChevronDownIcon aria-hidden='true' className='ml-2 h-5 w-5 text-gray-400' />
 									</span>
