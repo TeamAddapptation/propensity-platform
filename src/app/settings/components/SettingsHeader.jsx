@@ -6,12 +6,12 @@ import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const tabs = [
-	{ name: "My Workspaces", href: "#", key: "my-workspaces" },
-	{ name: "Connections", href: "#", key: "connections" },
-	{ name: "Users", href: "#", key: "users" },
-	{ name: "Billing", href: "#", key: "billing" },
-	{ name: "Installed Packages", href: "#", key: "installed-packages" },
-	{ name: "Exclusions", href: "#", key: "exclusions" },
+	{ name: "My Workspaces", href: "/settings", key: "my-workspaces" },
+	{ name: "Connections", href: "/settings/connections", key: "connections" },
+	{ name: "Users", href: "/settings/users", key: "users" },
+	{ name: "Billing", href: "/settings/billing", key: "billing" },
+	{ name: "Installed Packages", href: "/settings/installed_packages", key: "installed-packages" },
+	{ name: "Exclusions", href: "/settings/exclusions", key: "exclusions" },
 ];
 
 function classNames(...classes) {
@@ -19,7 +19,7 @@ function classNames(...classes) {
 }
 
 export default function SettingsHeader({ campaignData }) {
-	const [activeTab, setActiveTab] = useState("users");
+	const [activeTab, setActiveTab] = useState("my-workspaces");
 
 	return (
 		<div className='bg-white pt-6 px-6'>
@@ -29,14 +29,6 @@ export default function SettingsHeader({ campaignData }) {
 						<h1 id='message-heading' className='text-lg font-semibold leading-6 text-gray-900'>
 							Settings
 						</h1>
-						<div className='flex gap-2'>
-							<div className='mt-1 flex items-center text-xs text-gray-400 gap-1'>
-								<p className='text-gray-600 font-semibold'>Playbook</p>
-							</div>
-							<div className='mt-1 flex items-center text-xs text-gray-400 gap-1'>
-								<p className='text-gray-600 font-semibold'>Launch Date</p>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div className='d-flex flex-col'>
@@ -94,11 +86,10 @@ export default function SettingsHeader({ campaignData }) {
 					</select>
 				</div>
 				<div className='hidden sm:block'>
-					<div className=''>
-						<nav aria-label='Tabs' className='-mb-px flex space-x-8'>
-							{tabs.map((tab) => (
-								<a
-									key={tab.key}
+					<nav aria-label='Tabs' className='-mb-px flex space-x-8'>
+						{tabs.map((tab) => (
+							<Link href={tab.href} key={tab.key}>
+								<div
 									onClick={() => setActiveTab(tab.key)}
 									aria-current={activeTab === tab.key ? "page" : undefined}
 									className={classNames(
@@ -107,10 +98,10 @@ export default function SettingsHeader({ campaignData }) {
 									)}
 								>
 									{tab.name}
-								</a>
-							))}
-						</nav>
-					</div>
+								</div>
+							</Link>
+						))}
+					</nav>
 				</div>
 			</div>
 		</div>
