@@ -17,12 +17,14 @@ const adIcon = (type, size, logoSize) => {
 			);
 		case "facebook ad":
 		case "facebook carousel ad":
+		case "facebook video ad":
 			return (
 				<div className={`flex justify-center items-center ${size} rounded-full`} style={{ backgroundColor: "#4267B2" }}>
 					<i className={`fab fa-facebook-f text-white ${logoSize}`}></i>
 				</div>
 			);
 		case "google display ad":
+		case "google video ad":
 			return (
 				<div className={`flex justify-center items-center ${size} rounded-full bg-slate-100`}>
 					<img style={{ width: "13px", height: "auto" }} src='https://cdn.addapptation.com/addapptation-asset-library/google_ad_logo.png' alt='Google Ad Logo' />
@@ -30,6 +32,7 @@ const adIcon = (type, size, logoSize) => {
 			);
 		case "linkedin ad":
 		case "linkedin carousel ad":
+		case "linkedin video ad":
 			return (
 				<div className={`flex justify-center items-center ${size} rounded-full`} style={{ backgroundColor: "#0a66c2" }}>
 					<i className={`fab fa-linkedin-in text-white ${logoSize}`}></i>

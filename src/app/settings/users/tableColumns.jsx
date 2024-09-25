@@ -51,8 +51,8 @@ const usersColumns = [
 		centered: true,
 		cell: ({ row }) =>
 			row.original.User__r.Billing_Contact__c ? (
-				<div class='flex justify-center'>
-					<i class='fas fa-check text-green-600'></i>
+				<div className='flex justify-center'>
+					<i className='fas fa-check text-green-600'></i>
 				</div>
 			) : (
 				""

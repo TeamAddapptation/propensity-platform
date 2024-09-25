@@ -9,22 +9,22 @@ export default function Users() {
 		data: users,
 		error,
 		isLoading,
+		isFetching,
 	} = useQuery({
-		queryKey: ["connections"],
+		queryKey: ["usersQuery"],
 		queryFn: async () => {
 			const res = await fetch(`${process.env.NEXT_PUBLIC_API_USE}&users=true`);
 			const data = await res.json();
-			console.log("Users: ", data);
-
 			return data;
 		},
 	});
-	if (isLoading) return <p>Loading</p>;
+	if (isLoading || isFetching) return <p>Loading...</p>;
+	if (error) return <p>{error}</p>;
+	if (!users) return <p>No Data To Show</p>;
+	console.log(users);
 	return (
 		<div>
-			<Container>
-				<Table columns={usersColumns} tableData={users} enableSorting={true} />
-			</Container>
+			<Container>{<Table columns={usersColumns} tableData={users} enableSorting={true} enablePagination={true} pageSize={10} />}</Container>
 		</div>
 	);
 }
