@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang='en'>
 			<head>
-				<title>Propensity</title>
+				<title>R | Propensity</title>
 				<meta name='description' content='ABM' />
 				<link rel='stylesheet' type='text/css' href='https://cdn.addapptation.com/addapptation-stylesheets/fontawesome-pro-5.10.0-11-web/css/all.min.css' media='all' />
 			</head>

@@ -28,7 +28,6 @@ export default function SidebarNav() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	const { userData } = useAppContext();
-	console.log("User DAta: ", userData);
 	return (
 		<div>
 			<Dialog open={sidebarOpen} onClose={setSidebarOpen} className='relative z-50 lg:hidden'>

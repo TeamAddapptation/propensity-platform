@@ -7,7 +7,6 @@ import { formatDate, adIcon, statusBadge } from "@/app/utilities/helpers";
 
 export default function PlaysTable({ campaignId, playsData }) {
 	const sortedPlays = playsData.sort((a, b) => a.name.localeCompare(b.name));
-	console.log("Plays Data: ", playsData);
 	const [plays, setPlays] = useState(sortedPlays);
 
 	const columnHelper = createColumnHelper();
@@ -18,10 +17,10 @@ export default function PlaysTable({ campaignId, playsData }) {
 				<div className='flex gap-2 items-center'>
 					<span className='p__play-icon'>{adIcon(info.row.original.type, "w-6 h-6", "text-sm")}</span>
 					<div className='flex flex-col'>
+						<p className='truncate text-xs leading-5 text-gray-500'>{info.row.original.type}</p>
 						<Link className='text-gray-500 hover:text-tertiary-400 visited:text-gray-800' href={`${campaignId}/${info.row.original.id}`}>
 							{info.getValue()}
 						</Link>
-						<p className='truncate text-xs leading-5 text-gray-500'>{info.row.original.type}</p>
 					</div>
 				</div>
 			),
@@ -60,7 +59,7 @@ export default function PlaysTable({ campaignId, playsData }) {
 		<>
 			{table && table.getHeaderGroups().length > 0 && (
 				<div>
-					<div className='mt-8 flow-root'>
+					<div className='flow-root'>
 						<div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
 							<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 								<div className='overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg'>

@@ -14,7 +14,6 @@ export default function CampaignPricing({ pricing, isOpen, setIsOpen }) {
 		},
 		// More projects...
 	];
-	console.log("Pricing: ", pricing);
 	if (!pricing) return <p>Loading</p>;
 	return (
 		<Dialog open={isOpen} onClose={() => setIsOpen(false)} className='relative z-10 mt-5'>

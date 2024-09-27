@@ -17,7 +17,6 @@ async function connectBuyingCircleHandler(id, campaignId, playId) {
 		}
 
 		const data = await response.json();
-		console.log("Buying Circles: ", data);
 		return true;
 	} catch (error) {
 		console.error("Error submitting form:", error);

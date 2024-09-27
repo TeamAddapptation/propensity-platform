@@ -1,7 +1,6 @@
 import { formatDate } from "@/app/utilities/helpers";
 
 export default function PlayContentView({ play, fields, editHandler }) {
-	console.log("Fields: ", fields);
 	return (
 		<div className='bg-white border-t'>
 			<div>

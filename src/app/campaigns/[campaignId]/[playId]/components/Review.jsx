@@ -34,11 +34,11 @@ export default function Review({ play }) {
 				</div>
 				<div className='border-t border-gray-100 px-4 py-3 sm:col-span-1 sm:px-0'>
 					<dt className='text-sm font-medium leading-6 text-gray-900'>Daily Budget</dt>
-					<dd className='text-sm leading-6 text-gray-700'></dd>
+					<dd className='text-sm leading-6 text-gray-700'>{play.External_Ad_Options__c.daily_budget ? play.External_Ad_Options__c.daily_budget : "-"}</dd>
 				</div>
 				<div className='border-t border-gray-100 px-4 py-3 sm:col-span-1 sm:px-0'>
 					<dt className='text-sm font-medium leading-6 text-gray-900'>Bid Amount</dt>
-					<dd className='text-sm leading-6 text-gray-700'></dd>
+					<dd className='text-sm leading-6 text-gray-700'>{play.External_Ad_Options__c.cpc_bid ? play.External_Ad_Options__c.cpc_bid : "-"}</dd>
 				</div>
 			</dl>
 		</div>

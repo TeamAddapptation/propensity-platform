@@ -1,10 +1,10 @@
 "use client";
-import { CampaignsTable } from "./components/CampaignsTable";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Container from "../components/layout/Container";
 import Table from "../components/table/Table";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { EllipsisVerticalIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 
 const campaignColumns = [
@@ -59,6 +59,7 @@ const campaignColumns = [
 ];
 
 export default function Campaigns() {
+	const [searchText, setSearchText] = useState("");
 	const {
 		data: campaigns,
 		error,
@@ -75,7 +76,36 @@ export default function Campaigns() {
 	if (isLoading || isFetching) return <p>Loading...</p>;
 	return (
 		<div>
-			<Container>{<Table columns={campaignColumns} tableData={campaigns} enableSorting={true} initialSorting={[{ id: "name", desc: false }]} enablePagination={true} pageSize={10} />}</Container>
+			<Container>
+				<div className='border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between'>
+					<h3 className='text-lg font-semibold leading-6 text-gray-900'>ABM Campaigns</h3>
+					<div className='mt-3 sm:ml-4 sm:mt-0'>
+						<label htmlFor='mobile-search-candidate' className='sr-only'>
+							Search
+						</label>
+						<label htmlFor='desktop-search-candidate' className='sr-only'>
+							Search
+						</label>
+						<div className='flex gap-2 items-center rounded-md shadow-sm'>
+							<div className='relative flex-grow focus-within:z-10'>
+								<div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
+									<MagnifyingGlassIcon aria-hidden='true' className='h-5 w-5 text-gray-400' />
+								</div>
+								<input
+									id='search-input'
+									name='search-input'
+									type='text'
+									placeholder=''
+									value={searchText}
+									onChange={(e) => setSearchText(e.target.value)}
+									className='block w-full rounded-md border-0 py-1.5 pl-10 text-sm leading-6 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600'
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+				{<Table columns={campaignColumns} tableData={campaigns} enableSorting={true} searchText={searchText} initialSorting={[{ id: "name", desc: false }]} enablePagination={true} pageSize={10} />}
+			</Container>
 		</div>
 	);
 }

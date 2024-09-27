@@ -12,7 +12,7 @@ export default function Sidepane({ children, open, onClose }) {
 			<div className='fixed inset-0 overflow-hidden'>
 				<div className='absolute inset-0 overflow-hidden'>
 					<div className='pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10'>
-						<DialogPanel transition className='pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-[closed]:translate-x-full sm:duration-700'>
+						<DialogPanel transition className='pointer-events-auto w-screen max-w-3xl transform transition duration-500 ease-in-out data-[closed]:translate-x-full sm:duration-700'>
 							<div className='flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl'>
 								<div className='px-4 sm:px-6'>
 									<div className='flex items-start justify-between'>

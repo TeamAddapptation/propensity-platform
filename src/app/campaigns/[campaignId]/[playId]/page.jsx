@@ -110,6 +110,8 @@ export default function Play({ params }) {
 		}
 	}, [playData]);
 
+	console.log("Play Data: ", playData);
+
 	if (isLoading) {
 		return <Loading text={"Loading Play Data"} />;
 	}
@@ -123,7 +125,6 @@ export default function Play({ params }) {
 	if (!play) {
 		return <p>No play data found</p>;
 	}
-	console.log("Play Data: ", fetchedPlayData);
 
 	// Status badge rendering
 	function getStatusBadge(status) {

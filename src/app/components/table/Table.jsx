@@ -1,12 +1,26 @@
 "use client";
 import { useMemo, useState } from "react";
 import { useReactTable, flexRender, getCoreRowModel, getSortedRowModel, getPaginationRowModel } from "@tanstack/react-table";
-import { sampleData } from "./sampleData";
 import { Pagination } from "./Pagination";
 
-const Table = ({ columns, tableData, enableSorting, initialSorting, enablePagination, pageSize }) => {
-	const finalData = useMemo(() => tableData, []);
+const Table = ({ columns, tableData, enableSorting, initialSorting, enablePagination, pageSize, searchText, typeFilter }) => {
 	const finalColumnDef = useMemo(() => columns, []);
+
+	// Filtering the data based on searchText and typeFilter
+	const filteredData = useMemo(() => {
+		return tableData.filter((row) => {
+			// Filter by typeFilter
+			if (typeFilter && row.type !== typeFilter) {
+				return false;
+			}
+			// Filter by searchText
+			if (searchText) {
+				const searchString = searchText.toLowerCase();
+				return Object.values(row).some((value) => value && value.toString().toLowerCase().includes(searchString));
+			}
+			return true; // Show all rows if no filters are applied
+		});
+	}, [tableData, searchText, typeFilter]); // Ensure typeFilter is added to dependencies
 
 	const [sorting, setSorting] = useState(initialSorting || []);
 	const [pagination, setPagination] = useState({
@@ -16,7 +30,7 @@ const Table = ({ columns, tableData, enableSorting, initialSorting, enablePagina
 
 	const table = useReactTable({
 		columns: finalColumnDef,
-		data: finalData,
+		data: filteredData, // Use the filtered data here
 		getCoreRowModel: getCoreRowModel(),
 		...(enableSorting && { getSortedRowModel: getSortedRowModel() }),
 		state: {
@@ -74,7 +88,7 @@ const Table = ({ columns, tableData, enableSorting, initialSorting, enablePagina
 								))}
 							</tbody>
 						</table>
-						{enablePagination ? <Pagination table={table} totalRows={tableData.length} /> : ""}
+						{enablePagination ? <Pagination table={table} totalRows={filteredData.length} /> : ""}
 					</div>
 				</div>
 			</div>

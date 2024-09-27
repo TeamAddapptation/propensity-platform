@@ -3,7 +3,6 @@ import { HandThumbUpIcon, ChatBubbleLeftIcon, ShareIcon } from "@heroicons/react
 import styles from "../../css/facebookAd.module.css";
 
 export default function LinkedinAd({ play }) {
-	console.log("Preview Facebook: ", play);
 	function toSentenceCase(text) {
 		let words = text.split("_");
 		let titleCasedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
